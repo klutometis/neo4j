@@ -1,0 +1,14 @@
+((synopsis "neo4j REST client")
+ (author "Peter Danenberg")
+ (category db)
+ (license "BSD")
+ (depends uri-common
+          http-client
+          json
+          alist-lib
+          medea
+          debug
+          intarweb
+          setup-helper)
+ (test-depends)
+ (foreign-depends))
