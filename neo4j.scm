@@ -112,8 +112,8 @@
                   read-json)))
        (apply make-node (alist-values node))))))
 
-;;; Does it make more sense to key off of the id? Or should we have an
-;;; node-id->self?
+ ;; Does it make more sense to key off of the id? Or should we have an
+ ;; node-id->self?
  (define (get-node node-self)
    (let ((node (with-input-from-request
                 node-self
