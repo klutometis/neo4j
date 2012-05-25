@@ -121,9 +121,9 @@
                 read-json)))
      (apply make-node (alist-values node))))
 
-;;; Why not `delete-node!'; and, if so, why not `create-node!'?
-;;; `create-node!' is a little awkward, since it would return a value.
-;;; `delete-node!', on the other hand, would not.
+ ;; Why not `delete-node!'; and, if so, why not `create-node!'?
+ ;; `create-node!' is a little awkward, since it would return a value.
+ ;; `delete-node!', on the other hand, would not.
  (define (delete-node node)
    (with-input-from-request
     (make-request method: 'DELETE
@@ -131,8 +131,8 @@
     #f
     values))
 
-;;; <https://github.com/michaelklishin/neocons/blob/master/src/clojure/clojurewerkz/neocons/rest/relationships.clj#L82>,
-;;; as an example, fetches by integer id.
+ ;; <https://github.com/michaelklishin/neocons/blob/master/src/clojure/clojurewerkz/neocons/rest/relationships.clj#L82>,
+ ;; as an example, fetches by integer id.
  (define (get-relationship relationship-self)
    (let ((relationship
           (with-input-from-request
@@ -156,12 +156,12 @@
              read-json)))
        (apply make-relationship (alist-values relationship))))))
 
-;;; Relationship or relationship-self (i.e. relationship-id)? It may
-;;; be more common to pass around the ids; or, check this: we can
-;;; accept either, and extract in the case of objects!
-;;;
-;;; We're going to be dealing with a constant object/object-self pun,
-;;; though, which might become a pain-in-the-ass; hmm.
+ ;; Relationship or relationship-self (i.e. relationship-id)? It may
+ ;; be more common to pass around the ids; or, check this: we can
+ ;; accept either, and extract in the case of objects!
+ ;;
+ ;; We're going to be dealing with a constant object/object-self pun,
+ ;; though, which might become a pain-in-the-ass; hmm.
  (define (delete-relationship relationship)
    (with-input-from-request
     (make-request method: 'DELETE
@@ -169,7 +169,7 @@
     #f
     values))
 
-;;; Should it be `relationship-properties-all'?
+ ;; Should it be `relationship-properties-all'?
  (define (get-all-relationship-properties relationship)
    (with-input-from-request
     (relationship-properties relationship)
@@ -317,5 +317,4 @@
                          (symbol->string key))))
     #f
     read-json)
-   (void))
- )
+   (void)))
