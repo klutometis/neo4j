@@ -2,13 +2,13 @@
  (author "Peter Danenberg")
  (category db)
  (license "BSD")
- (depends uri-common
-          http-client
-          json
-          alist-lib
-          medea
+ (depends alist-lib
           debug
+          http-client
           intarweb
-          setup-helper)
+          json
+          medea
+          setup-helper
+          uri-common)
  (test-depends)
  (foreign-depends))
