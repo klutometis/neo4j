@@ -1,0 +1,78 @@
+* TODO Finish the API.
+  #+BEGIN_SRC scheme
+    (use alist-lib
+         debug
+         http-client
+         intarweb
+         json
+         medea
+         uri-common)
+    
+    (include "neo4j.scm")
+    (use neo4j)
+    
+    (define-record index
+      template
+      configuration)
+    
+    (define-record-printer index
+      (lambda (index output)
+        (pp (record->vector index) output)))
+    
+    ;;; <http://components.neo4j.org/neo4j-lucene-index/snapshot/>
+    ;;; mentions that "lucene" is the default index.
+    (define create-node-index
+      (case-lambda
+       ((service-root name)
+        (create-node-index service-root name '()))
+       ((service-root name config)
+        (let ((index (with-input-from-request
+                      (service-root-node-index service-root)
+                      (json->string `((name . ,name)
+                                      (config . ,config)))
+                      read-json)))
+          (make-index (alist-ref index 'template)
+                      (alist-delete 'template index))))))
+    
+    (define create-relationship-index
+      (case-lambda
+       ((service-root name)
+        (create-relation-index service-root name '()))
+       ((service-root name config)
+        (let ((index (with-input-from-request
+                      (service-root-relationship-index service-root)
+                      (json->string `((name . ,name)
+                                      (config . ,config)))
+                      read-json)))
+          (make-index (alist-ref index 'template)
+                      (alist-delete 'template index))))))
+    
+    ;;; Should we do an index-lookup by name?
+    (define (delete-node-index node-index)
+      (with-input-from-request
+       (make-request method: 'DELETE
+                     uri: (uri-reference
+                           (replace
+                            (replace (index-template node-index)
+                                     "value"
+                                     "")
+                            "key"
+                            "")))
+       #f
+       read-json))
+    
+    (define delete-relation-index delete-node-index)
+    
+    (define (list-node-indices service-root)
+      (with-input-from-request
+       (service-root-node-index service-root)
+       #f
+       read-json))
+    
+    (let ((connection (connect "http://localhost:7474/db/data")))
+      (debug connection)
+      (let* ((name (symbol->string (gensym)))
+             (node-index (create-node-index connection name)))
+        (delete-node-index node-index))
+      (create-relation-index connection (symbol->string (gensym))))
+  #+END_SRC

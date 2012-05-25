@@ -24,7 +24,12 @@
    delete-node-property
    delete-relationship-property)
 
-  (import chicken scheme)
+  (import chicken
+          extras
+          irregex
+          lolevel
+          scheme
+          srfi-13)
 
   (use alist-lib
        debug
