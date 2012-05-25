@@ -26,13 +26,13 @@
 
   (import chicken scheme)
 
-  (use uri-common
-       http-client
-       json
-       alist-lib
-       medea
+  (use alist-lib
        debug
-       intarweb)
+       http-client
+       intarweb
+       json
+       medea
+       uri-common)
 
  (define-record service-root
    cypher
