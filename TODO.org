@@ -76,3 +76,41 @@
         (delete-node-index node-index))
       (create-relation-index connection (symbol->string (gensym))))
   #+END_SRC
+
+* DONE Multi-replace
+  CLOSED: [2012-05-25 Fri 18:59]
+  #+BEGIN_SRC scheme
+    (use irregex
+         test
+         matchable
+         debug)
+    
+    (define replace
+      (case-lambda
+       ((template key value)
+        (irregex-replace `(: "{" ,key "}") template value))
+       ((template key->value)
+        (let iter ((key->value key->value)
+                   (template template))
+          (if (null? key->value)
+              template
+              (iter (cdr key->value)
+                    (match (car key->value)
+                      ((key value)
+                       (replace template key value)))))))))
+    
+    (test
+     "a b c"
+     (replace "a {x} c" "x" "b"))
+    
+    (test
+     "a b {y} d"
+     (replace "a {x} {y} d" "x" "b"))
+    
+    (test
+     "a b c d"
+     (replace "a {x} {y} d"
+              '(("x" "b")
+                ("y" "c"))))
+    
+  #+END_SRC
