@@ -48,18 +48,29 @@
                       (alist-delete 'template index))))))
     
     ;;; Should we do an index-lookup by name?
-    (define (delete-node-index node-index)
-      (with-input-from-request
-       (make-request method: 'DELETE
-                     uri: (uri-relative-to
-                           (uri-reference "..")
-                           (uri-reference
-                            (replace
-                             (index-template node-index)
-                             '(("key" . "")
-                               ("value" . ""))))))
-       #f
-       read-json))
+    (define delete-node-index
+      (case-lambda
+       ((service-root index-name)
+        (let ((uri (uri-reference (service-root-node-index service-root))))
+          (with-input-from-request
+           (make-request method: 'DELETE
+                         uri: (update-uri uri
+                                          path: (append (uri-path uri)
+                                                        (list index-name))))
+           #f
+           read-json)))
+       ((node-index)
+        (with-input-from-request
+         (make-request method: 'DELETE
+                       uri: (uri-relative-to
+                             (uri-reference "..")
+                             (uri-reference
+                              (replace
+                               (index-template node-index)
+                               '(("key" . "")
+                                 ("value" . ""))))))
+         #f
+         read-json))))
     
     (define delete-relation-index delete-node-index)
     
