@@ -88,12 +88,18 @@
     
     (define list-node-indexes list-node-indices)
     
-    (define (add-node-to-index service-root index-name key value node)
-      (with-input-from-request
-       (uri-relative-to
-        (uri-reference index-name)
-        (uri-reference
-         (service-root-node-index service-root)))))
+    (define (add-node-to-index service-root index-name node-self key value)
+      (let ((indexed-node
+             (with-input-from-request
+              (append-to-uri-path
+               (service-root-node-index service-root)
+               index-name)
+              (json->string
+               `((key . ,key)
+                 (value . ,value)
+                 (uri . ,node-self)))
+              read-json)))
+        (apply make-node indexed-node)))
     
     (let ((connection (connect "http://localhost:7474/db/data")))
       (debug connection)
