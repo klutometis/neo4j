@@ -1,4 +1,6 @@
 (module neo4j
+  *
+  #;
   (connect
    create-node
    get-node
@@ -36,6 +38,7 @@
        http-client
        intarweb
        json
+       matchable
        medea
        uri-common)
 
@@ -199,7 +202,7 @@
             template
             (iter (cdr key->value)
                   (match (car key->value)
-                    ((key value)
+                    ((key . value)
                      (replace template key value)))))))))
 
   (define (get-relationship-property relationship key)
