@@ -107,7 +107,17 @@
                          url
                          #f
                          read-json)))
-      (apply make-service-root (alist-values service-root))))
+      (make-service-root
+       (alist-ref service-root 'cypher)
+       (alist-ref service-root 'relationship_index)
+       (alist-ref service-root 'node)
+       (alist-ref service-root 'relationship_types)
+       (alist-ref service-root 'neo4j_version)
+       (alist-ref service-root 'batch)
+       (alist-ref service-root 'extensions_info)
+       (alist-ref service-root 'node_index)
+       (alist-ref service-root 'reference_node)
+       (alist-ref service-root 'extensions))))
 
   (define create-node
     (case-lambda
