@@ -146,7 +146,7 @@
                    (service-root-node service-root)
                    (json->string properties)
                    read-json)))
-        (apply make-node (cons #f (alist-values node)))))))
+        (make-node/alist node)))))
 
   ;; Does it make more sense to key off of the id? Or should we have an
   ;; node-id->self?
@@ -155,7 +155,7 @@
                  node-self
                  #f
                  read-json)))
-      (apply make-node (alist-values node))))
+      (make-node/alist node)))
 
   ;; Why not `delete-node!'; and, if so, why not `create-node!'?
   ;; `create-node!' is a little awkward, since it would return a value.
@@ -186,7 +186,7 @@
             relationship-self
             #f
             read-json)))
-      (apply make-relationship (alist-values relationship))))
+      (make-relationship/alist relationship)))
 
   (define create-relationship
     (case-lambda
@@ -201,7 +201,7 @@
                  (type . ,type)
                  (data . ,data)))
               read-json)))
-        (apply make-relationship (alist-values relationship))))))
+        (make-relationship/alist relationship)))))
 
   ;; Relationship or relationship-self (i.e. relationship-id)? It may
   ;; be more common to pass around the ids; or, check this: we can
@@ -265,7 +265,7 @@
 
   (define (get-all-relationships node)
     (map (lambda (relationship)
-           (apply make-relationship relationship))
+           (make-relationship/alist relationship))
          (with-input-from-request
           (node-all-relationships node)
           #f
@@ -273,7 +273,7 @@
 
   (define (get-incoming-relationships node)
     (map (lambda (relationship)
-           (apply make-relationship relationship))
+           (make-relationship/alist relationship))
          (with-input-from-request
           (node-incoming-relationships node)
           #f
@@ -281,7 +281,7 @@
 
   (define (get-outgoing-relationships node)
     (map (lambda (relationship)
-           (apply make-relationship relationship))
+           (make-relationship/alist relationship))
          (with-input-from-request
           (node-outgoing-relationships node)
           #f
@@ -289,7 +289,7 @@
 
   (define (get-all-typed-relationships node types)
     (map (lambda (relationship)
-           (apply make-relationship relationship))
+           (make-relationship/alist relationship))
          (with-input-from-request
           (replace
            (node-all-typed-relationships node)
@@ -300,7 +300,7 @@
 
   (define (get-incoming-typed-relationships node types)
     (map (lambda (relationship)
-           (apply make-relationship relationship))
+           (make-relationship/alist relationship))
          (with-input-from-request
           (replace
            (node-incoming-typed-relationships node)
@@ -311,7 +311,7 @@
 
   (define (get-outgoing-typed-relationships node types)
     (map (lambda (relationship)
-           (apply make-relationship relationship))
+           (make-relationship/alist relationship))
          (with-input-from-request
           (replace
            (node-outgoing-typed-relationships node)

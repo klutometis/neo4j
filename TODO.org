@@ -99,7 +99,9 @@
                  (value . ,value)
                  (uri . ,node-self)))
               read-json)))
-        (apply make-node indexed-node)))
+        (make-node/alist indexed-node)))
+    
+    (trace add-node-to-index)
     
     (let ((connection (connect "http://localhost:7474/db/data")))
       (debug connection)
