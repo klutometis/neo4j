@@ -119,6 +119,24 @@
        (alist-ref service-root 'reference_node)
        (alist-ref service-root 'extensions))))
 
+  (define (make-node/alist node)
+    (make-node
+     (alist-ref/default node 'indexed #f)
+     (alist-ref node 'outgoing_relationships)
+     (alist-ref node 'data)
+     (alist-ref node 'traverse)
+     (alist-ref node 'all_typed_relationships)
+     (alist-ref node 'self)
+     (alist-ref node 'property)
+     (alist-ref node 'properties)
+     (alist-ref node 'outgoing_typed_relationships)
+     (alist-ref node 'incoming_relationships)
+     (alist-ref node 'extensions)
+     (alist-ref node 'create_relationship)
+     (alist-ref node 'paged_traverse)
+     (alist-ref node 'all_relationships)
+     (alist-ref node 'incoming_typed_relationships)))
+
   (define create-node
     (case-lambda
      ((service-root)
