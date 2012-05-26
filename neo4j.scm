@@ -59,12 +59,13 @@
       (pp (record->vector service-root) output)))
 
   (define-record node
+    indexed
     outgoing-relationships
     data
     traverse
     all-typed-relationships
-    property
     self
+    property
     properties
     outgoing-typed-relationships
     incoming-relationships
@@ -106,7 +107,6 @@
                          url
                          #f
                          read-json)))
-      (debug service-root)
       (apply make-service-root (alist-values service-root))))
 
   (define create-node
@@ -118,7 +118,7 @@
                    (service-root-node service-root)
                    (json->string properties)
                    read-json)))
-        (apply make-node (alist-values node))))))
+        (apply make-node (cons #f (alist-values node)))))))
 
   ;; Does it make more sense to key off of the id? Or should we have an
   ;; node-id->self?
