@@ -37,7 +37,7 @@
     (define create-relationship-index
       (case-lambda
        ((service-root name)
-        (create-relation-index service-root name '()))
+        (create-relationship-index service-root name '()))
        ((service-root name config)
         (let ((index (with-input-from-request
                       (service-root-relationship-index service-root)
@@ -51,13 +51,13 @@
     (define (delete-node-index node-index)
       (with-input-from-request
        (make-request method: 'DELETE
-                     uri: (uri-reference
-                           (replace
-                            (replace (index-template node-index)
-                                     "value"
-                                     "")
-                            "key"
-                            "")))
+                     uri: (uri-relative-to
+                           (uri-reference "..")
+                           (uri-reference
+                            (replace
+                             (index-template node-index)
+                             '(("key" . "")
+                               ("value" . ""))))))
        #f
        read-json))
     
@@ -73,8 +73,9 @@
       (debug connection)
       (let* ((name (symbol->string (gensym)))
              (node-index (create-node-index connection name)))
+        (debug node-index)
         (delete-node-index node-index))
-      (create-relation-index connection (symbol->string (gensym))))
+      (create-relationship-index connection (symbol->string (gensym))))
   #+END_SRC
 
 * DONE Multi-replace
