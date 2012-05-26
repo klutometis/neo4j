@@ -47,6 +47,12 @@
           (make-index (alist-ref index 'template)
                       (alist-delete 'template index))))))
     
+    (define (append-to-uri-path uri . path)
+      (let ((uri (uri-reference uri)))
+        (update-uri uri
+                    path: (append (uri-path uri)
+                                  path))))
+    
     ;;; Should we do an index-lookup by name?
     (define delete-node-index
       (case-lambda
@@ -54,9 +60,9 @@
         (let ((uri (uri-reference (service-root-node-index service-root))))
           (with-input-from-request
            (make-request method: 'DELETE
-                         uri: (update-uri uri
-                                          path: (append (uri-path uri)
-                                                        (list index-name))))
+                         uri: (append-to-uri-path
+                               (service-root-node-index service-root)
+                               index-name))
            #f
            read-json)))
        ((node-index)
