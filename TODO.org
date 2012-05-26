@@ -82,6 +82,13 @@
     
     (define list-node-indexes list-node-indices)
     
+    (define (add-node-to-index service-root index-name key value node)
+      (with-input-from-request
+       (uri-relative-to
+        (uri-reference index-name)
+        (uri-reference
+         (service-root-node-index service-root)))))
+    
     (let ((connection (connect "http://localhost:7474/db/data")))
       (debug connection)
       (let* ((name (symbol->string (gensym)))
