@@ -80,6 +80,8 @@
        #f
        read-json))
     
+    (define list-node-indexes list-node-indices)
+    
     (let ((connection (connect "http://localhost:7474/db/data")))
       (debug connection)
       (let* ((name (symbol->string (gensym)))
