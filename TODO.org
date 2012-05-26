@@ -107,10 +107,13 @@
         (let ((node-index (create-node-index connection name)))
           (delete-node-index node-index))
         (create-node-index connection name)
-        (delete-node-index connection name))
+        (delete-node-index connection name)
+        (let ((node (create-node connection)))
+          (debug (add-node-to-index connection name (node-self node) "oh" "jes"))))
     
-      (debug (list-node-indices connection))
-      (create-relationship-index connection (symbol->string (gensym))))
+      #;(debug (list-node-indices connection))
+      #;(create-relationship-index connection (symbol->string (gensym)))
+      )
   #+END_SRC
 
 * DONE Multi-replace
