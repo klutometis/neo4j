@@ -188,8 +188,19 @@
      (json->string properties)
      read-json))
 
-  (define (replace template key value)
-    (irregex-replace `(: "{" ,key "}") template value))
+  (define replace
+    (case-lambda
+     ((template key value)
+      (irregex-replace `(: "{" ,key "}") template value))
+     ((template key->value)
+      (let iter ((key->value key->value)
+                 (template template))
+        (if (null? key->value)
+            template
+            (iter (cdr key->value)
+                  (match (car key->value)
+                    ((key value)
+                     (replace template key value)))))))))
 
   (define (get-relationship-property relationship key)
     (with-input-from-request
