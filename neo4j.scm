@@ -167,6 +167,17 @@
      #f
      values))
 
+  (define (make-relationship/alist relationship)
+    (make-relationship
+     (alist-ref relationship 'start)
+     (alist-ref relationship 'data)
+     (alist-ref relationship 'self)
+     (alist-ref relationship 'property)
+     (alist-ref relationship 'properties)
+     (alist-ref relationship 'type)
+     (alist-ref relationship 'extensions)
+     (alist-ref relationship 'end)))
+
   ;; <https://github.com/michaelklishin/neocons/blob/master/src/clojure/clojurewerkz/neocons/rest/relationships.clj#L82>,
   ;; as an example, fetches by integer id.
   (define (get-relationship relationship-self)
