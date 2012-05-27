@@ -101,6 +101,11 @@
               read-json)))
         (apply make-node indexed-node)))
     
+    (define remove-node-from-index
+      (case-lambda ((service-root index-name ))))
+    
+    #;(define (remove-node-from-index service-root index-name ))
+    
     (let ((connection (connect "http://localhost:7474/db/data")))
       (debug connection)
       (let ((name (symbol->string (gensym))))
