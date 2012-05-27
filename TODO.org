@@ -99,7 +99,9 @@
                  (value . ,value)
                  (uri . ,node-self)))
               read-json)))
-        (apply make-node indexed-node)))
+        (make-node/alist indexed-node)))
+    
+    (trace add-node-to-index)
     
     (define remove-node-from-index
       (case-lambda ((service-root index-name ))))
@@ -114,7 +116,12 @@
         (create-node-index connection name)
         (delete-node-index connection name)
         (let ((node (create-node connection)))
-          (debug (add-node-to-index connection name (node-self node) "oh" "jes"))))
+          (debug node)
+          (debug (add-node-to-index connection
+                                    name
+                                    (node-self node)
+                                    "oh"
+                                    "jes"))))
     
       #;(debug (list-node-indices connection))
       #;(create-relationship-index connection (symbol->string (gensym)))
