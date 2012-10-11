@@ -7,8 +7,9 @@
           http-client
           intarweb
           json
+          matchable
           medea
           setup-helper
           uri-common)
- (test-depends)
+ (test-depends test)
  (foreign-depends))

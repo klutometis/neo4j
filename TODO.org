@@ -127,7 +127,6 @@
       #;(create-relationship-index connection (symbol->string (gensym)))
       )
   #+END_SRC
-
 * DONE Multi-replace
   CLOSED: [2012-05-25 Fri 18:59]
   #+BEGIN_SRC scheme
