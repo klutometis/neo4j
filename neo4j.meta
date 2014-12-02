@@ -3,7 +3,6 @@
  (category db)
  (license "BSD")
  (depends alist-lib
-          debug
           http-client
           intarweb
           json

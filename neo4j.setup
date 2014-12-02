@@ -1,7 +1,7 @@
-(include "setup-helper")
+(use setup-helper-mod)
 
 (verify-extension-name "neo4j")
 
 (setup-shared-extension-module
  'neo4j
- (extension-version "0.1.2"))
+ (extension-version "0.1.3"))

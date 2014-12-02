@@ -34,7 +34,6 @@
           srfi-13)
 
   (use alist-lib
-       debug
        http-client
        intarweb
        json
